@@ -62,7 +62,7 @@ stages:
           deploy:
             steps:
               - download: none
-              #- checkout: self
+              - checkout: self
               - task: PublishBuildArtifacts@1
                 displayName: Create Artifact
                 inputs:
