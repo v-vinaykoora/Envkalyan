@@ -1,19 +1,109 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+trigger: none
 
-trigger:
-- master
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:  
+  - job: Build
+    displayName: Build job
+    pool: Hosted
+    steps:
+    - script: echo Hello, world! This is CI job
+      displayName: 'Run a one-line script'
 
-pool:
-  vmImage: 'ubuntu-latest'
+    - task: PublishBuildArtifacts@1
+      displayName: Create Artifact
+      inputs:
+        artifactName: Artifact1
+        pathToPublish: BVT\testFolder
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- stage: QA
+  displayName: QA stage
+  jobs:
+  - job: NoArtifactJob
+    pool: Hosted
+    steps:
+      - powershell: ls $(Pipeline.Workspace) -r #Check the content of the workspace directory
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - job: DownloadAllArtifactJob
+    pool: Hosted
+    steps:
+      - download: current
+      - powershell: |
+          ls $(Pipeline.Workspace)/
+          ls $(Pipeline.Workspace)/Artifact1
+          ls $(Pipeline.Workspace)/Artifact1/a.txt
+      - powershell: |
+          Remove-Item $(Pipeline.Workspace)\Artifact1 -Recurse -Force
+        displayName: Scorch workspace
+
+  - job: DownloadParticularArtifactJob
+    pool: Hosted
+    steps:
+      - download: current
+        artifact: Artifact1
+      - powershell: |
+          ls $(Pipeline.Workspace)/
+          ls $(Pipeline.Workspace)/Artifact1
+          ls $(Pipeline.Workspace)/Artifact1/a.txt
+      - powershell: |
+          Remove-Item $(Pipeline.Workspace)\Artifact1 -Recurse -Force
+        displayName: Scorch workspace
+
+- stage: Deploy
+  displayName: Deploy stage
+  jobs:  
+  - deployment: Deploy0
+    displayName: Upload New Artifact
+    pool: hosted
+    environment: Kuber_02_14_2022
+    strategy:
+        runOnce:
+          deploy:
+            steps:
+              - download: none
+              - checkout: self
+              - task: PublishBuildArtifacts@1
+                displayName: Create Artifact
+                inputs:
+                  artifactName: Extension
+                  pathToPublish: BVT\Extension
+
+  - deployment: Deploy1
+    displayName: Download All Artifacts
+    pool: hosted
+    dependsOn: Deploy0
+    environment: Kuber_02_14_2022
+    strategy:
+        runOnce:
+          deploy:
+            steps:
+              - powershell: |
+                  ls $(Pipeline.Workspace)/Artifact1
+                  ls $(Pipeline.Workspace)/Artifact1/a.txt
+                  ls $(Pipeline.Workspace)/Extension/
+                  ls $(Pipeline.Workspace)/Extension/Extension.txt
+              - powershell: |
+                  Remove-Item $(Pipeline.Workspace)\Artifact1 -Recurse -Force
+                  Remove-Item $(Pipeline.Workspace)\Extension -Recurse -Force
+                displayName: Scorch workspace
+
+  - deployment: Deploy2
+    displayName: Download mentioned Artifacts with other properties mentioned
+    pool: hosted
+    dependsOn: Deploy0
+    environment: Kuber_02_14_2022
+    strategy:
+        runOnce:
+          deploy:
+            steps:
+              - download: current
+                artifact: Extension
+                patterns: '**/*.txt'
+              - powershell: |
+                  ls $(Pipeline.Workspace)/
+                  ls $(Pipeline.Workspace)/Extension/
+              - powershell: |
+                  Remove-Item $(Pipeline.Workspace)\Extension -Recurse -Force
+                displayName: Scorch workspace
+
