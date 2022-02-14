@@ -87,7 +87,7 @@ stages:
   - deployment: Deploy2
     displayName: Download mentioned Artifacts
     pool: hosted
-    environment: env_1_19
+    environment: Kuber_02_14_2022
     strategy:
         runOnce:
           deploy:
@@ -106,7 +106,7 @@ stages:
   - deployment: Deploy3
     displayName: Download mentioned Artifacts with other properties mentioned
     pool: hosted
-    environment: env_1_19
+    environment: Kuber_02_14_2022
     strategy:
         runOnce:
           deploy:
@@ -123,7 +123,7 @@ stages:
   - deployment: Deploy4
     displayName: Download None
     pool: hosted
-    environment: env_1_19
+    environment: Kuber_02_14_2022
     strategy:
         runOnce:
           deploy:
