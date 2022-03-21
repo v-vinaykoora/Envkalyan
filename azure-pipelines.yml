@@ -7,7 +7,6 @@ stages:
   - job: Build
     displayName: Build job
     pool: Hosted
-    vmImage: windows-latest
     steps:
     - script: echo Hello, world! This is CI job
       displayName: 'Run a one-line script'
