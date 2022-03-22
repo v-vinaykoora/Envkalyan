@@ -6,7 +6,7 @@ stages:
   jobs:  
   - job: Build
     displayName: Build job
-    pool: Hosted
+    pool: Advikpool
     steps:
     - script: echo Hello, world! This is CI job
       displayName: 'Run a one-line script'
