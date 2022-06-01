@@ -6,7 +6,7 @@ stages:
   jobs:  
   - job: Build
     displayName: Build job
-    pool: Default
+    pool: Azure Pipelines
     steps:
     - script: echo Hello, world! This is CI job
       displayName: 'Run a one-line script'
@@ -24,12 +24,12 @@ stages:
   displayName: QA stage
   jobs:
   - job: NoArtifactJob
-    pool: Default
+    pool: Azure Pipelines
     steps:
       - powershell: ls $(Pipeline.Workspace) -r #Check the content of the workspace directory
   
   - job: DownloadAllArtifactJob
-    pool: Default
+    pool: Azure Pipelines
     steps:
       - download: current
       - powershell: |
@@ -44,7 +44,7 @@ stages:
         displayName: Scorch workspace
 
   - job: DownloadParticularArtifactJob
-    pool: Default
+    pool: Azure Pipelines
     steps:
       - download: current
         artifact: Artifact1
@@ -57,7 +57,7 @@ stages:
         displayName: Scorch workspace
 
   - job: HonorDefaultProperties
-    pool: Default
+    pool: Azure Pipelines
     steps:
       - download: current
         enabled: false
@@ -68,7 +68,7 @@ stages:
   jobs:  
   - deployment: Deploy1
     displayName: Download All Artifacts
-    pool: Default
+    pool: Azure Pipelines
     environment: Vinay_test_0601
     strategy:
         runOnce:
@@ -86,7 +86,7 @@ stages:
 
   - deployment: Deploy2
     displayName: Download mentioned Artifacts
-    pool: Default
+    pool: Azure Pipelines
     environment: Vinay_test_0601
     strategy:
         runOnce:
@@ -105,7 +105,7 @@ stages:
 
   - deployment: Deploy3
     displayName: Download mentioned Artifacts with other properties mentioned
-    pool: Default
+    pool: Azure Pipelines
     environment: Vinay_test_0601
     strategy:
         runOnce:
@@ -122,7 +122,7 @@ stages:
 
   - deployment: Deploy4
     displayName: Download None
-    pool: Default
+    pool: Azure Pipelines
     environment: Vinay_test_0601
     strategy:
         runOnce:
