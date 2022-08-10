@@ -6,7 +6,7 @@ stages:
   jobs:  
   - job: Build
     displayName: Build job
-    pool: Azure Pipelines
+    pool: AdvikPool
     steps:
     - script: echo Hello, world! This is CI job
       displayName: 'Run a one-line script'
@@ -24,12 +24,12 @@ stages:
   displayName: QA stage
   jobs:
   - job: NoArtifactJob
-    pool: Azure Pipelines
+    pool: AdvikPool
     steps:
       - powershell: ls $(Pipeline.Workspace) -r #Check the content of the workspace directory
   
   - job: DownloadAllArtifactJob
-    pool: Azure Pipelines
+    pool: AdvikPool
     steps:
       - download: current
       - powershell: |
@@ -44,7 +44,7 @@ stages:
         displayName: Scorch workspace
 
   - job: DownloadParticularArtifactJob
-    pool: Azure Pipelines
+    pool: AdvikPool
     steps:
       - download: current
         artifact: Artifact1
@@ -57,7 +57,7 @@ stages:
         displayName: Scorch workspace
 
   - job: HonorDefaultProperties
-    pool: Azure Pipelines
+    pool: AdvikPool
     steps:
       - download: current
         enabled: false
@@ -68,7 +68,7 @@ stages:
   jobs:  
   - deployment: Deploy1
     displayName: Download All Artifacts
-    pool: Azure Pipelines
+    pool: AdvikPool
     environment: Vinay_test_0601
     strategy:
         runOnce:
@@ -86,8 +86,8 @@ stages:
 
   - deployment: Deploy2
     displayName: Download mentioned Artifacts
-    pool: Azure Pipelines
-    environment: Vinay_test_0601
+    pool: AdvikPool
+    environment: ENV_0810
     strategy:
         runOnce:
           deploy:
@@ -105,8 +105,8 @@ stages:
 
   - deployment: Deploy3
     displayName: Download mentioned Artifacts with other properties mentioned
-    pool: Azure Pipelines
-    environment: Vinay_test_0601
+    pool: AdvikPool
+    environment: ENV_0810
     strategy:
         runOnce:
           deploy:
@@ -122,8 +122,8 @@ stages:
 
   - deployment: Deploy4
     displayName: Download None
-    pool: Azure Pipelines
-    environment: Vinay_test_0601
+    pool: AdvikPool
+    environment: ENV_0810
     strategy:
         runOnce:
           deploy:
