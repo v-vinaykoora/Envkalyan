@@ -56,7 +56,7 @@ stages:
   - deployment: Deploy0
     displayName: Upload New Artifact
     pool: Advikpool
-    environment: Test0713
+    environment: ENV_0423
     strategy:
         runOnce:
           deploy:
@@ -73,7 +73,7 @@ stages:
     displayName: Download All Artifacts
     pool: Advikpool
     dependsOn: Deploy0
-    environment: Test0713
+    environment: ENV_0423
     strategy:
         runOnce:
           deploy:
@@ -92,7 +92,7 @@ stages:
     displayName: Download mentioned Artifacts with other properties mentioned
     pool: Advikpool
     dependsOn: Deploy0
-    environment: Test0713
+    environment: ENV_0423
     strategy:
         runOnce:
           deploy:
