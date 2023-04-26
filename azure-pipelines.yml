@@ -56,7 +56,7 @@ stages:
   - deployment: Deploy0
     displayName: Upload New Artifact
     pool: AditriPool
-    environment: ENV_0425
+    environment: ENV_0426
     strategy:
         runOnce:
           deploy:
@@ -73,7 +73,7 @@ stages:
     displayName: Download All Artifacts
     pool: AditriPool
     dependsOn: Deploy0
-    environment: ENV_0425
+    environment: ENV_0426
     strategy:
         runOnce:
           deploy:
@@ -92,7 +92,7 @@ stages:
     displayName: Download mentioned Artifacts with other properties mentioned
     pool: AditriPool
     dependsOn: Deploy0
-    environment: ENV_0425
+    environment: ENV_0426
     strategy:
         runOnce:
           deploy:
