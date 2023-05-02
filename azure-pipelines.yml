@@ -6,7 +6,7 @@ stages:
   jobs:  
   - job: Build
     displayName: Build job
-    pool: RM_1ES_Hosted_Pool_1
+    pool: Advikpool
     steps:
     - script: echo Hello, world! This is CI job
       displayName: 'Run a one-line script'
@@ -21,12 +21,12 @@ stages:
   displayName: QA stage
   jobs:
   - job: NoArtifactJob
-    pool: RM_1ES_Hosted_Pool_1
+    pool: Advikpool
     steps:
       - powershell: ls $(Pipeline.Workspace) -r #Check the content of the workspace directory
 
   - job: DownloadAllArtifactJob
-    pool: RM_1ES_Hosted_Pool_1
+    pool: Advikpool
     steps:
       - download: current
       - powershell: |
@@ -38,7 +38,7 @@ stages:
         displayName: Scorch workspace
 
   - job: DownloadParticularArtifactJob
-    pool: RM_1ES_Hosted_Pool_1
+    pool: Advikpool
     steps:
       - download: current
         artifact: Artifact1
@@ -55,7 +55,7 @@ stages:
   jobs:  
   - deployment: Deploy0
     displayName: Upload New Artifact
-    pool: Hosted RM_1ES_Hosted_Pool_1
+    pool: Advikpool
     environment: ENV_0502
     strategy:
         runOnce:
@@ -71,7 +71,7 @@ stages:
 
   - deployment: Deploy1
     displayName: Download All Artifacts
-    pool: RM_1ES_Hosted_Pool_1
+    pool: Advikpool
     dependsOn: Deploy0
     environment: ENV_0502
     strategy:
@@ -90,7 +90,7 @@ stages:
 
   - deployment: Deploy2
     displayName: Download mentioned Artifacts with other properties mentioned
-    pool: RM_1ES_Hosted_Pool_1
+    pool: Advikpool
     dependsOn: Deploy0
     environment: ENV_0502
     strategy:
