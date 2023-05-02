@@ -6,7 +6,7 @@ stages:
   jobs:  
   - job: Build
     displayName: Build job
-    pool: AditriPool
+    pool: Hosted Windows 2019 with VS2019
     steps:
     - script: echo Hello, world! This is CI job
       displayName: 'Run a one-line script'
@@ -21,12 +21,12 @@ stages:
   displayName: QA stage
   jobs:
   - job: NoArtifactJob
-    pool: AditriPool
+    pool: AditrHosted Windows 2019 with VS2019iPool
     steps:
       - powershell: ls $(Pipeline.Workspace) -r #Check the content of the workspace directory
 
   - job: DownloadAllArtifactJob
-    pool: AditriPool
+    pool: Hosted Windows 2019 with VS2019
     steps:
       - download: current
       - powershell: |
@@ -38,7 +38,7 @@ stages:
         displayName: Scorch workspace
 
   - job: DownloadParticularArtifactJob
-    pool: AditriPool
+    pool: Hosted Windows 2019 with VS2019
     steps:
       - download: current
         artifact: Artifact1
@@ -55,8 +55,8 @@ stages:
   jobs:  
   - deployment: Deploy0
     displayName: Upload New Artifact
-    pool: AditriPool
-    environment: ENV_0426
+    pool: Hosted Windows 2019 with VS2019
+    environment: ENV_0502
     strategy:
         runOnce:
           deploy:
@@ -71,9 +71,9 @@ stages:
 
   - deployment: Deploy1
     displayName: Download All Artifacts
-    pool: AditriPool
+    pool: Hosted Windows 2019 with VS2019
     dependsOn: Deploy0
-    environment: ENV_0426
+    environment: ENV_0502
     strategy:
         runOnce:
           deploy:
@@ -90,9 +90,9 @@ stages:
 
   - deployment: Deploy2
     displayName: Download mentioned Artifacts with other properties mentioned
-    pool: AditriPool
+    pool: Hosted Windows 2019 with VS2019
     dependsOn: Deploy0
-    environment: ENV_0426
+    environment: ENV_0502
     strategy:
         runOnce:
           deploy:
