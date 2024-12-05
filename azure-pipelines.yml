@@ -3,7 +3,7 @@ stages:
   jobs:
   - deployment: DeployJob
     displayName: Deploy to Environment
-    environment: 'MyEnvironmentName' # Replace with your environment name
+    environment: 'ENV_02_21_22' # Replace with your environment name
     strategy:
       runOnce:
         deploy:
